@@ -5,10 +5,12 @@
  */
 package com.mytravel.controller;
 
+import com.mytravel.model.Location;
 import com.mytravel.model.Status;
 import com.mytravel.model.StatusForm;
 import com.mytravel.model.User;
 import com.mytravel.service.UserService;
+import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,16 +55,16 @@ public class LoginController {
     
     @RequestMapping(value="/profile", method = RequestMethod.POST)
     public ModelAndView createStatus(@ModelAttribute StatusForm statusForm) {
-        System.out.println("1 "+statusForm.getStatusVisibility());
-        System.out.println("2 "+statusForm.getLocation());
-        
+
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
         
-        System.out.println("Us "+user.getEmail());
+        List<Location> locations = userService.findAllLocations();
+                
+        userService.saveStatus(statusForm, user, locations);
         
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("locations", userService.findAllLocations());
+        modelAndView.addObject("locations", locations);
         modelAndView.setViewName("profile");
         return modelAndView;
     }

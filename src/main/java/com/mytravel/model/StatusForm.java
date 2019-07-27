@@ -14,6 +14,8 @@ import lombok.Data;
 public class StatusForm {
     private int statusVisibility;
     private String location;
+    
+    private String statusDesc;
 
     public int getStatusVisibility() {
         return statusVisibility;
@@ -30,5 +32,17 @@ public class StatusForm {
     public void setLocation(String location) {
         this.location = location;
     }
+
+    public String getStatusDesc() {
+        return statusDesc;
+    }
+
+    public void setStatusDesc(String statusDesc) {
+        this.statusDesc = statusDesc;
+    }
+
+    
+    
+    
     
 }
