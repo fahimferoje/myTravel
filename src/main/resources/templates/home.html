@@ -4,11 +4,40 @@ To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+    
+    <head>
+        <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.0/css/all.css' integrity='sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ' crossorigin='anonymous'>
+    </head>
     
     <th:block th:include="/breadCrumb"></th:block> 
     
     <div>
-        <h1>My Travel Agency</h1>
+        <h1>My Travel</h1>
+        <hr/> <hr/>
+    </div>
+    
+    <div>
+        <h2>=========Public Thoughts========</h2>
+        <hr/>
+    </div>
+    
+    <div th:each="status : ${publicStatuses}">
+        <table>
+            <tr>
+                <td<i class='fas fa-user-tie'></i>&nbsp;<span th:text="${status.userName}"> Status </span></td>
+            </tr>
+            <tr>
+                <td><span th:text="${status.statusDesc}"> Status </span></td>
+            </tr>
+<!--            <tr>
+                <td><span th:text="${status.statusVisibilityString}"> Visibility </span></td>
+            </tr>-->
+            <tr>
+                <td><i class="fa fa-map-marker"></i>&nbsp;<span th:text="${status.location}"> Location </span></td>
+            </tr>
+        </table>
+        <hr/>
     </div>
 </html>
