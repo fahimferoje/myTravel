@@ -10,6 +10,7 @@ import com.mytravel.model.Status;
 import com.mytravel.model.StatusForm;
 import com.mytravel.model.User;
 import com.mytravel.service.UserService;
+import com.mytravel.util.StatusUtil;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.validation.Valid;
@@ -62,35 +63,15 @@ public class LoginController {
         
         List<Location> locations = userService.findAllLocations();
                 
-        userService.saveStatus(statusForm, user, locations);
-        
-        System.out.println("Fin "+userService.getAllStatusByUserId(user.getId()).size());
-        
-        List<Status> statuses = userService.getAllStatusByUserId(user.getId());
-        
-        List<StatusForm> statusForms = statuses.stream()
-                .map(st -> toStatusForm(st))
-                .collect(Collectors.toList());
+        userService.saveStatus(statusForm, user, locations);       
         
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("locations", locations);
-        modelAndView.addObject("allStatuses", statusForms);
+        modelAndView.addObject("allStatuses", StatusUtil.getStatusesAsStatusFormList(userService, user.getId()));
         modelAndView.addObject("statusForm",new StatusForm());
         modelAndView.setViewName("profile");
         return modelAndView;
-    }
-    
-    private StatusForm toStatusForm(Status status) {
-        
-        StatusForm statusForm = new StatusForm();
-        statusForm.setLocation(status.getLocation().getName());
-        statusForm.setStatusVisibilityString(
-                status.getStatusVisibility().equals(Status.StatusVisibility.PRIVATE) ? "Private" : "Public");
-        statusForm.setStatusDesc(status.getStatusDescription());
-        
-        return statusForm;
-    }
-    
+    }   
 
 
     @RequestMapping(value="/registration", method = RequestMethod.GET)
