@@ -19,6 +19,7 @@ import com.mytravel.repository.LocationRepository;
 import com.mytravel.repository.RoleRepository;
 import com.mytravel.repository.StatusRepository;
 import com.mytravel.repository.UserRepository;
+import com.mytravel.util.StatusUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -145,14 +146,18 @@ public class UserService {
         statusRepository.save(status);
     }
 
-    public void makePinnedStatus(int statusId) {       
+    public void makePinnedOrUnpinned(int statusId, boolean pinned) {       
         
         Status status = statusRepository.findStatusById(statusId);
         
-        status.setPinned(true);
+        status.setPinned(pinned);
         
         statusRepository.save(status);
         
+    }
+
+    public StatusForm findPinnedStatus(int userId) {
+        return StatusUtil.toStatusForm(statusRepository.findPinnedStatus(userId));
     }
     
     

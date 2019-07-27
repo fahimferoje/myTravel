@@ -25,4 +25,7 @@ public interface StatusRepository extends JpaRepository<Status, Long>{
     @Query("SELECT st FROM Status st WHERE st.id = ?1")
     Status findStatusById(int id);
     
+    @Query("SELECT st FROM Status st WHERE st.pinned = 1 AND st.user.id = ?1")
+    Status findPinnedStatus(int userId);
+    
 }

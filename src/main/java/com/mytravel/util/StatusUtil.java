@@ -56,9 +56,7 @@ public class StatusUtil {
     public static List<StatusForm> getPublicStatuses(UserService userService) {
         
         List<Status> publicStatuses = userService.getAllPublicStatuses();
-        
-        System.out.println("Pub "+publicStatuses.size());
-        
+                
         List<StatusForm> statusForms = publicStatuses.stream()
                 .map(st -> toStatusForm(st))
                 .collect(Collectors.toList());
@@ -69,10 +67,6 @@ public class StatusUtil {
 
     public static StatusForm findPinnedStatus(List<StatusForm> statusForms) {
         
-        for(StatusForm f : statusForms){
-            System.out.println("id :"+f.getId());
-            System.out.println("is pinned :"+f.isPinnedStatus());
-        }
         Optional<StatusForm> pinnedStatusFormOp = statusForms
                 .stream()
                 .filter(st -> st.isPinnedStatus())
@@ -81,6 +75,11 @@ public class StatusUtil {
         return pinnedStatusFormOp.isPresent() ? pinnedStatusFormOp.get() : null;
                 
     }
+    
+    public static void removePinnedStatus(StatusForm pinnedStatusToRemove, List<StatusForm> statusForms) {
+        statusForms.removeIf(sf -> sf.getId() == pinnedStatusToRemove.getId());
+    }
+    
     
     
     

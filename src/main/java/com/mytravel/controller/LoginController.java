@@ -11,10 +11,7 @@ import com.mytravel.model.StatusForm;
 import com.mytravel.model.User;
 import com.mytravel.service.UserService;
 import com.mytravel.util.StatusUtil;
-import static java.util.Collections.list;
 import java.util.List;
-import java.util.stream.Collectors;
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,7 +56,11 @@ public class LoginController {
         
         List<StatusForm> statusForms = StatusUtil.getStatusesAsStatusFormList(userService, user.getId());
         
-        StatusForm pinnedStatusForm = StatusUtil.findPinnedStatus(statusForms);
+        StatusForm pinnedStatusForm = userService.findPinnedStatus(user.getId());
+        
+        System.out.println("ppp "+pinnedStatusForm);
+        
+        StatusUtil.removePinnedStatus(pinnedStatusForm, statusForms);
         
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("locations", userService.findAllLocations());
@@ -81,7 +82,9 @@ public class LoginController {
         
         List<StatusForm> statusForms = StatusUtil.getStatusesAsStatusFormList(userService, user.getId());
         
-        StatusForm pinnedStatusForm = StatusUtil.findPinnedStatus(statusForms);
+        StatusForm pinnedStatusForm = userService.findPinnedStatus(user.getId());
+        
+        StatusUtil.removePinnedStatus(pinnedStatusForm, statusForms);
         
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("locations", locations);
@@ -92,28 +95,35 @@ public class LoginController {
         return modelAndView;
     }
     
-    @RequestMapping(value="/profile", params = "statusId", method = RequestMethod.POST)
-    public ModelAndView makePinnedStatus(@RequestParam int statusId) {
+    @RequestMapping(value="/profile", params = {"statusId", "oldPinnedStatusId"}, method = RequestMethod.POST)
+    public ModelAndView makePinnedStatus(@RequestParam int statusId
+            , @RequestParam int oldPinnedStatusId) {
 
         User user = StatusUtil.getLoggedInuser(userService);
         
+        System.out.println("Old "+oldPinnedStatusId);
+        
         List<Location> locations = userService.findAllLocations();
                 
-        userService.makePinnedStatus(statusId);
+        userService.makePinnedOrUnpinned(statusId, true);
+        
+        if(oldPinnedStatusId != 0){
+            userService.makePinnedOrUnpinned(oldPinnedStatusId, false);
+        }
         
         Status pinnedStatus = userService.getStatusById(statusId);
         
         List<StatusForm> statusForms = StatusUtil.getStatusesAsStatusFormList(userService, user.getId());
         
-        //StatusForm pinnedStatusForm = StatusUtil.findPinnedStatus(statusForms);
+        StatusForm pinnedStForm = StatusUtil.toStatusForm(pinnedStatus);
         
-        //System.out.println("piiiiii "+pinnedStatusForm.isPinnedStatus());
+        StatusUtil.removePinnedStatus(pinnedStForm, statusForms);
         
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("locations", locations);
-        modelAndView.addObject("allStatuses", StatusUtil.getStatusesAsStatusFormList(userService, user.getId()));
+        modelAndView.addObject("allStatuses", statusForms);
         modelAndView.addObject("statusForm",new StatusForm());
-        modelAndView.addObject("pinnedStatusForm", StatusUtil.toStatusForm(pinnedStatus));
+        modelAndView.addObject("pinnedStatusForm", pinnedStForm);
         modelAndView.setViewName("profile");
         return modelAndView;
     }   
@@ -150,8 +160,10 @@ public class LoginController {
     
     @RequestMapping(value="/edited", method = RequestMethod.POST)
     public ModelAndView editStatusToDb(@RequestParam (value="statusId") int statusId, @ModelAttribute StatusForm statusForm){
-        System.out.println("Edited called");
+        
         List<Location> locations = userService.findAllLocations();
+        
+        int loggedInUserId = StatusUtil.getLoggedInuser(userService).getId();
         
         ModelAndView modelAndView = new ModelAndView();
         
@@ -159,10 +171,18 @@ public class LoginController {
                 
         userService.editStatus(statusForm, locations);
         
+        List<StatusForm> statusForms = StatusUtil.getStatusesAsStatusFormList(userService
+                , loggedInUserId);
+        
+        StatusForm pinnedStatusForm = userService.findPinnedStatus(loggedInUserId);
+                
+        StatusUtil.removePinnedStatus(pinnedStatusForm, statusForms);
+        
         modelAndView.addObject("locations", locations);
         modelAndView.addObject("allStatuses", StatusUtil.getStatusesAsStatusFormList(userService
                 , StatusUtil.getLoggedInuser(userService).getId()));
         modelAndView.addObject("statusForm",new StatusForm());
+        modelAndView.addObject("pinnedStatusForm", pinnedStatusForm);
 
         modelAndView.setViewName("profile");
         return modelAndView;
