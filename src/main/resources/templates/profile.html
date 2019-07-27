@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<body>
+    
+    <form th:action="@{/logout}" method="get">
+        <button class="btn btn-md btn-danger btn-block" name="registration"
+                type="Submit">Logout
+        </button>
+    </form>
+
+<input type="button" name="answer" value="Post Status" onclick="showDiv()" />
+
+<div id="welcomeDiv"  style="display:none;" >
+  <br><br>
+  
+<form action="#" th:action="@{/profile}" th:object="${statusForm}" method="post">
+  Status:<br>
+  <input type="text" id="status" width="500px">
+  <br><br>
+  Visibility:
+  <br><br>
+  <input type="radio" th:field="*{statusVisibility}" value="0"> Private<br>
+  <input type="radio" th:field="*{statusVisibility}" value="1" checked> Public<br>
+  <br><br>
+          
+  <input list="locations" name="locations" th:field="*{location}">
+  <datalist id="locations" th:field="*{location}">
+    <option th:each="location : ${locations}" th:value="${location.name}" 
+            th:data-value="${location.name}">
+  </datalist>
+      
+  <br><br>
+  <input type="submit" value="Submit">
+</form> 
+</div>
+
+<script>
+
+function showDiv() {
+   document.getElementById('welcomeDiv').style.display = "block";
+}
+
+</script>
+
+ 
+</body>
+</html>
