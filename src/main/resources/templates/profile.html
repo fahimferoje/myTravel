@@ -8,6 +8,8 @@
                 type="Submit">Logout
         </button>
     </form>
+    
+    <br> <br>
 
 <input type="button" name="answer" value="Post Status" onclick="showDiv()" />
 
@@ -15,17 +17,18 @@
   <br><br>
   
 <form action="#" th:action="@{/profile}" th:object="${statusForm}" method="post">
-  Status:<br>
-  <input type="text" id="status" width="500px">
+    Status:
+      <input type="text" th:field="*{statusDesc}">
   <br><br>
+          
   Visibility:
   <br><br>
   <input type="radio" th:field="*{statusVisibility}" value="0"> Private<br>
   <input type="radio" th:field="*{statusVisibility}" value="1" checked> Public<br>
   <br><br>
           
-  <input list="locations" name="locations" th:field="*{location}">
-  <datalist id="locations" th:field="*{location}">
+  <input list="locations" value ="${locations[0]}" name="locationsDataList" th:field="*{location}">
+  <datalist id="locationsDataList" th:field="*{location}">
     <option th:each="location : ${locations}" th:value="${location.name}" 
             th:data-value="${location.name}">
   </datalist>
@@ -34,6 +37,10 @@
   <input type="submit" value="Submit">
 </form> 
 </div>
+
+<div>
+    
+</div>>
 
 <script>
 
