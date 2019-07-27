@@ -22,4 +22,7 @@ public interface StatusRepository extends JpaRepository<Status, Long>{
     @Query("SELECT st FROM Status st WHERE st.statusVisibility = 1")
     List<Status> findAllPublicStatuses();
     
+    @Query("SELECT st FROM Status st WHERE st.id = ?1")
+    Status findStatusById(int id);
+    
 }

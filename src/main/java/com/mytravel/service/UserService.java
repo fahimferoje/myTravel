@@ -113,6 +113,13 @@ public class UserService {
     public List<Status> getAllPublicStatuses() {
         return statusRepository.findAllPublicStatuses();
     }
+
+    public Status getStatusById(int statusId) {
+        
+        Status status = statusRepository.findStatusById(statusId);
+        
+        return status;
+    }
     
     
     

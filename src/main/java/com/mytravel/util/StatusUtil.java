@@ -39,6 +39,7 @@ public class StatusUtil {
                 status.getStatusVisibility().equals(Status.StatusVisibility.PRIVATE) ? "Private" : "Public");
         statusForm.setStatusDesc(status.getStatusDescription());
         statusForm.setUserName(status.getUser().getName() + " " + status.getUser().getLastName());
+        statusForm.setId(status.getId());
         
         return statusForm;
     }

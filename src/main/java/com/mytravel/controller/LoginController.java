@@ -13,6 +13,7 @@ import com.mytravel.service.UserService;
 import com.mytravel.util.StatusUtil;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,6 +89,31 @@ public class LoginController {
         User user = new User();
         modelAndView.addObject("user", user);
         modelAndView.setViewName("registration");
+        return modelAndView;
+    }
+    
+    @RequestMapping(value="/editStatus", method = RequestMethod.POST)
+    public ModelAndView editStatus(@RequestParam (value="statusId") int statusId, @ModelAttribute StatusForm statusForm){
+        
+        ModelAndView modelAndView = new ModelAndView();
+        
+        System.out.println("St "+statusId);
+        
+        Status status = userService.getStatusById(statusId);
+        
+        System.out.println("Sttt ");
+        
+        if(status == null){
+            System.out.println("Sta null ");
+            modelAndView.setViewName("editerror");
+            return modelAndView;
+        }
+        
+        System.out.println("Found status ");
+        
+        modelAndView.addObject("statusToEdit", StatusUtil.toStatusForm(status));
+
+        modelAndView.setViewName("editstatus");
         return modelAndView;
     }
 

@@ -20,6 +20,8 @@ public class StatusForm {
     private String userName;
     
     private int locationId;
+    
+    private int id;
 
     public int getStatusVisibility() {
         return statusVisibility;
@@ -67,6 +69,14 @@ public class StatusForm {
 
     public void setLocationId(int locationId) {
         this.locationId = locationId;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
     
     
