@@ -42,6 +42,10 @@ public class StatusUtil {
         statusForm.setUserName(status.getUser().getName() + " " + status.getUser().getLastName());
         statusForm.setId(status.getId());
         
+        statusForm.setLocationId(status.getLocation().getId());
+        
+        statusForm.setStatusVisibility(status.getStatusVisibility().ordinal());
+        
         return statusForm;
     }
     

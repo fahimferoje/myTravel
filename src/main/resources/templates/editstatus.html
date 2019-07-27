@@ -13,18 +13,22 @@ and open the template in the editor.
     <body>
         <form action="#" th:action="@{/profile}" th:object="${statusForm}" method="post">
             Status:
-            <input type="text" th:field="*{statusDesc}">
+            <input type="text" th:name="editedStatusDesc" th:value="${statusToEdit.statusDesc}">
             <br><br>
             
             Visibility:
             <br><br>
-            <input type="radio" th:field="*{statusVisibility}" value="0"> Private<br>
-            <input type="radio" th:field="*{statusVisibility}" value="1" checked> Public<br>
+            <input type="radio" name="visibilitygrp" th:checked="${statusToEdit.statusVisibility} == 0" value="0"> Private<br>
+            <input type="radio" name="visibilitygrp" th:checked="${statusToEdit.statusVisibility} == 1" value="1"> Public<br>
             <br><br>
             Location:
             <br> <br>
-            <select th:field="*{locationId}">
-                <option th:each="location : ${locations}" th:value="${location.id}" th:text="${location.name}">Options</option>
+            <select th:name="locationId">
+                <option th:each="location : ${locations}" 
+                        th:value="${location.id}" 
+                        th:text="${location.name}"
+                        th:selected="${location.id} == ${statusToEdit.locationId}"
+                        >Options</option>
             </select>
                     
             <input type="hidden" th:name="statusToEditId" th:value="${statusToEdit.id}" readonly style="border: none">

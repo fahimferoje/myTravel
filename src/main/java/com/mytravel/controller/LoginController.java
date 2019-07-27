@@ -148,6 +148,10 @@ public class LoginController {
             modelAndView.setViewName("editerror");
             return modelAndView;
         }
+        
+        System.out.println("S "+status.getId());
+        System.out.println("Ssd "+StatusUtil.toStatusForm(status).getId());
+                
                 
         modelAndView.addObject("statusToEdit", StatusUtil.toStatusForm(status));
         modelAndView.addObject("locations", userService.findAllLocations());
@@ -156,15 +160,26 @@ public class LoginController {
         return modelAndView;
     }
     
-    @RequestMapping(value="/profile", params = "statusToEditId", method = RequestMethod.POST)
-    public ModelAndView editStatusToDb(@RequestParam int statusToEditId, @ModelAttribute StatusForm statusForm){
+    @RequestMapping(value="/profile", params ={"editedStatusDesc", "visibilitygrp" 
+            ,"statusToEditId", "locationId"}
+            , method = RequestMethod.POST)
+    public ModelAndView editStatusToDb(
+            @RequestParam String editedStatusDesc,
+            @RequestParam int statusToEditId,
+            @RequestParam int visibilitygrp,
+            @RequestParam int locationId) {
+        
         List<Location> locations = userService.findAllLocations();
         
         int loggedInUserId = StatusUtil.getLoggedInuser(userService).getId();
         
         ModelAndView modelAndView = new ModelAndView();
         
+        StatusForm statusForm = new StatusForm();  
         statusForm.setId(statusToEditId);
+        statusForm.setStatusVisibility(visibilitygrp);
+        statusForm.setLocationId(locationId);
+        statusForm.setStatusDesc(editedStatusDesc);
                 
         userService.editStatus(statusForm, locations);
         
