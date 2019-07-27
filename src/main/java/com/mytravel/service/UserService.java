@@ -78,12 +78,12 @@ public class UserService {
     
     public void saveStatus(StatusForm statusForm, User user, List<Location> locations) {
         
-        if(statusForm.getLocation() == null || statusForm.getLocation().isEmpty()){
+        if(statusForm.getLocationId() == 0){
             return;
         }
         
         Optional<Location> locOp = locations.stream()
-                .filter(loc -> loc.getName().equals(statusForm.getLocation()))
+                .filter(loc -> loc.getId() == statusForm.getLocationId())
                 .findFirst();
         
         if(!locOp.isPresent()){

@@ -5,8 +5,6 @@
  */
 package com.mytravel.model;
 
-import lombok.Data;
-
 /**
  *
  * @author Fahim Feroje Al Jami
@@ -20,6 +18,8 @@ public class StatusForm {
     private String statusVisibilityString;
     
     private String userName;
+    
+    private int locationId;
 
     public int getStatusVisibility() {
         return statusVisibility;
@@ -60,6 +60,16 @@ public class StatusForm {
     public void setUserName(String userName) {
         this.userName = userName;
     }
+
+    public int getLocationId() {
+        return locationId;
+    }
+
+    public void setLocationId(int locationId) {
+        this.locationId = locationId;
+    }
+    
+    
     
     
 }
