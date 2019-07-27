@@ -35,41 +35,73 @@
                                                     <option th:each="location : ${locations}" th:value="${location.id}" th:text="${location.name}">Options</option>
                                                 </select>
                                                                             
-                                                                            <br><br>
-                                                                                    <input type="submit" value="Post Status">
-                                                                                        </form> 
+                                                <br><br>
+                                                <input type="submit" value="Post Status">
+                                                </form> 
                                                                                         
-                                                                                        </div>
+                                                </div>
                                                                                         
-                                                                                        <div class="column">
+                                                <div class="column">
                                                                                             
-                                                                                            <h2>My Statuses</h2>
-                                                                                            <hr style="border-top: dotted 1px;" />
-                                                                                            <hr style="border-top: dotted 1px;" />
-                                                                                            
-                                                                                <div>
-                                                                                    <div th:each="status : ${allStatuses}">
-                                                                                        <form th:action="@{/editStatus}" method="post">
-                                 
-                                                                                            <input type="text" th:value="${status.statusDesc}" readonly style="border: none">
-                                                                                             <br>
+                                                    <h2>My Statuses</h2>
+                                                    <hr style="border-top: dotted 1px;" />
+                                                    <hr style="border-top: dotted 1px;" />
+                                                    <div>
+                                                        <h3>Pinned Status</h3>
+                                                            
+                                                        <div th:if="${pinnedStatusForm != null}">
+                                                            <form>
+                                                                                                                        
+                                                            <input type="text" th:value="${pinnedStatusForm.statusDesc}" readonly style="border: none">
+                                                             <br>
+                                                                    
+                                                            <input type="text" th:value="${pinnedStatusForm.statusVisibilityString}" readonly style="border: none">
+                                                            <br>
+                                                                            
+                                                            <input type="hidden" th:name="statusId" th:value="${pinnedStatusForm.id}" readonly style="border: none">
+                                                            <i class="fa fa-map-marker"></i>&nbsp;<input type="text" th:value="${pinnedStatusForm.location}" readonly style="border: none">
+                                                                                
+                      
+                                                            </form>
+                                                        </div>
+                                                            
+                                                        <div th:unless="${pinnedStatusForm != null}">
+                                                            <div>no pinned status</div>
+                                                        </div>
+                                                            
+                                                        
+                                                            </div>
+                                                        
+                                                    <hr style="border-top: dotted 1px;" />
+                                                    <hr style="border-top: dotted 1px;" />
+                                                        
+                                                    <div>
+                                                        <div th:each="status : ${allStatuses}">
+                                                            <form th:action="@{/editStatus}" method="post">
+                                                                
+                                                                <input type="text" th:value="${status.statusDesc}" readonly style="border: none">
+                                                                <br>
+                                                                        
+                                                                <input type="text" th:value="${status.statusVisibilityString}" readonly style="border: none">
+                                                                <br>
+                                                                                
+                                                                <input type="hidden" th:name="statusId" th:value="${status.id}" readonly style="border: none">
+                                                                                    
+                                                                                    
+                                                                <i class="fa fa-map-marker"></i>&nbsp;<input type="text" th:value="${status.location}" readonly style="border: none">
+                                                                <br>  
+                                                                <button type="submit" <i class="fa fa-edit"></i></button>
                                                                                                 
-                                                                                            <input type="text" th:value="${status.statusVisibilityString}" readonly style="border: none">
-                                                                                             <br>
-                                                                                                 
-                                                                                            <input type="hidden" th:name="statusId" th:value="${status.id}" readonly style="border: none">
-                                                                                             
-                                                                                                
-                                                                                                 <i class="fa fa-map-marker"></i>&nbsp;<input type="text" th:value="${status.location}" readonly style="border: none">
-                                                                                              <br>  
-                                                                                                  <button type="submit" <i class="fa fa-edit"></i></button>
-                                                                                        
-                                                                                        </form>
-                                                                                        <hr/>
-                                                                                    </div>
-                                                                                </div>
+                                                            </form>
+                                                            <form th:action="@{/profile}" method="post">
+                                                                <input type="hidden" th:name="statusId" th:value="${status.id}" readonly style="border: none">
+                                                                <button type="submit">Make it as pinned</button>
+                                                            </form>
+                                                            <hr/>
+                                                        </div>
+                                                    </div>
                                                                                             
-                                                                                        </div>
+                                                </div>
                                                                                         
                                                                                         
                                                                                         </div>
