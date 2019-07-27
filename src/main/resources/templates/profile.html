@@ -95,6 +95,7 @@
                                                             </form>
                                                             <form th:action="@{/profile}" method="post">
                                                                 <input type="hidden" th:name="statusId" th:value="${status.id}" readonly style="border: none">
+                                                                <input type="hidden" th:name="oldPinnedStatusId" th:value="${pinnedStatusForm.id}" readonly style="border: none">
                                                                 <button type="submit">Make it as pinned</button>
                                                             </form>
                                                             <hr/>
