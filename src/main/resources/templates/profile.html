@@ -1,73 +1,74 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org">
     
     <head>
         <link rel="stylesheet" type="text/css" th:href="@{/profile.css}" />
+        <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.0/css/all.css' integrity='sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ' crossorigin='anonymous'>
     </head>
     
-<body>
-    
-    <div class="row">
+    <body>
         
-        <div class="column">
-            <form th:action="@{/logout}" method="get">
+        <div class="row">
+            
+            <div class="column">
+                <form th:action="@{/logout}" method="get">
                     <button class="btn btn-md btn-danger btn-block" name="registration"
-                        type="Submit">Logout
+                            type="Submit">Logout
                     </button>
-            </form>
-    
-            <br> <br>
-
-        <input type="button" value="Post Status"/>
-        
-        <form action="#" th:action="@{/profile}" th:object="${statusForm}" method="post">
-            Status:
-            <input type="text" th:field="*{statusDesc}">
-            <br><br>
-          
-            Visibility:
-            <br><br>
-            <input type="radio" th:field="*{statusVisibility}" value="0"> Private<br>
-            <input type="radio" th:field="*{statusVisibility}" value="1" checked> Public<br>
-            <br><br>
-          
-            <input list="locations" value ="${locations[0]}" name="locationsDataList" th:field="*{location}">
-            <datalist id="locationsDataList" th:field="*{location}">
-            <option th:each="location : ${locations}" th:value="${location.name}" 
-                th:data-value="${location.name}">
-            </datalist>
-      
-            <br><br>
-            <input type="submit" value="Submit">
-            </form> 
-        
-        </div>>
-        
-        <div class="column">
-            
-            <div>
-    <div th:each="status : ${allStatuses}">
-        <table>
-            <tr>
-                <td><span th:text="${status.statusDesc}"> Status </span></td>
-            </tr>
-            <tr>
-                <td><span th:text="${status.statusVisibilityString}"> Visibility </span></td>
-            </tr>
-            <tr>
-                <td><span th:text="${status.location}"> Location </span></td>
-            </tr>
-        </table>>
-        <hr/>
-    </div>
-</div>
-            
-        </div>
-
-
-        </div>
-
- 
-</body>
-</html>
+                </form>
+                
+                <br> <br>
+                        
+                        <input type="button" value="Post Status"/>
+                        
+                        <form action="#" th:action="@{/profile}" th:object="${statusForm}" method="post">
+                            Status:
+                            <input type="text" th:field="*{statusDesc}">
+                                <br><br>
+                                        
+                                        Visibility:
+                                        <br><br>
+                                                <input type="radio" th:field="*{statusVisibility}" value="0"> Private<br>
+                                                        <input type="radio" th:field="*{statusVisibility}" value="1" checked> Public<br>
+                                                                <br><br>
+                                                                        
+                                                                        <input list="locations" value ="${locations[0]}" name="locationsDataList" th:field="*{location}">
+                                                                            <datalist id="locationsDataList" th:field="*{location}">
+                                                                                <option th:each="location : ${locations}" th:value="${location.name}" 
+                                                                                        th:data-value="${location.name}">
+                                                                            </datalist>
+                                                                            
+                                                                            <br><br>
+                                                                                    <input type="submit" value="Submit">
+                                                                                        </form> 
+                                                                                        
+                                                                                        </div>
+                                                                                        
+                                                                                        <div class="column">
+                                                                                            
+                                                                                            <div>
+                                                                                                <div th:each="status : ${allStatuses}">
+                                                                                                    <table>
+                                                                                                        <tr>
+                                                                                                            <td><span th:text="${status.statusDesc}"> Status </span></td>
+                                                                                                        </tr>
+                                                                                                        <tr>
+                                                                                                            <td><span th:text="${status.statusVisibilityString}"> Visibility </span></td>
+                                                                                                        </tr>
+                                                                                                        <tr>
+                                                                                                            <td><i class="fa fa-map-marker"></i>&nbsp;<span th:text="${status.location}"> Location </span></td>
+                                                                                                        </tr>
+                                                                                                    </table>
+                                                                                                    <hr/>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            
+                                                                                        </div>
+                                                                                        
+                                                                                        
+                                                                                        </div>
+                                                                                        
+                                                                                        
+                                                                                        </body>
+                                                                                        </html>
