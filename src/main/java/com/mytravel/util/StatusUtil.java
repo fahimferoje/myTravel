@@ -77,6 +77,11 @@ public class StatusUtil {
     }
     
     public static void removePinnedStatus(StatusForm pinnedStatusToRemove, List<StatusForm> statusForms) {
+        
+        if(pinnedStatusToRemove == null){
+            return;
+        }
+        
         statusForms.removeIf(sf -> sf.getId() == pinnedStatusToRemove.getId());
     }
     

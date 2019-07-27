@@ -57,9 +57,7 @@ public class LoginController {
         List<StatusForm> statusForms = StatusUtil.getStatusesAsStatusFormList(userService, user.getId());
         
         StatusForm pinnedStatusForm = userService.findPinnedStatus(user.getId());
-        
-        System.out.println("ppp "+pinnedStatusForm);
-        
+                
         StatusUtil.removePinnedStatus(pinnedStatusForm, statusForms);
         
         ModelAndView modelAndView = new ModelAndView();

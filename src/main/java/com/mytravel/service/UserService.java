@@ -157,7 +157,11 @@ public class UserService {
     }
 
     public StatusForm findPinnedStatus(int userId) {
-        return StatusUtil.toStatusForm(statusRepository.findPinnedStatus(userId));
+        
+        Status pinSt = statusRepository.findPinnedStatus(userId);
+        
+        return pinSt != null ? 
+                StatusUtil.toStatusForm(statusRepository.findPinnedStatus(userId)) : null;
     }
     
     
