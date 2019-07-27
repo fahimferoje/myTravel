@@ -11,6 +11,7 @@ import com.mytravel.model.StatusForm;
 import com.mytravel.model.User;
 import com.mytravel.service.UserService;
 import com.mytravel.util.StatusUtil;
+import static java.util.Collections.list;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
@@ -96,24 +97,38 @@ public class LoginController {
     public ModelAndView editStatus(@RequestParam (value="statusId") int statusId, @ModelAttribute StatusForm statusForm){
         
         ModelAndView modelAndView = new ModelAndView();
-        
-        System.out.println("St "+statusId);
-        
+                
         Status status = userService.getStatusById(statusId);
-        
-        System.out.println("Sttt ");
-        
+                
         if(status == null){
-            System.out.println("Sta null ");
             modelAndView.setViewName("editerror");
             return modelAndView;
         }
-        
-        System.out.println("Found status ");
-        
+                
         modelAndView.addObject("statusToEdit", StatusUtil.toStatusForm(status));
+        modelAndView.addObject("locations", userService.findAllLocations());
 
         modelAndView.setViewName("editstatus");
+        return modelAndView;
+    }
+    
+    @RequestMapping(value="/edited", method = RequestMethod.POST)
+    public ModelAndView editStatusToDb(@RequestParam (value="statusId") int statusId, @ModelAttribute StatusForm statusForm){
+        System.out.println("Edited called");
+        List<Location> locations = userService.findAllLocations();
+        
+        ModelAndView modelAndView = new ModelAndView();
+        
+        statusForm.setId(statusId);
+                
+        userService.editStatus(statusForm, locations);
+        
+        modelAndView.addObject("locations", locations);
+        modelAndView.addObject("allStatuses", StatusUtil.getStatusesAsStatusFormList(userService
+                , StatusUtil.getLoggedInuser(userService).getId()));
+        modelAndView.addObject("statusForm",new StatusForm());
+
+        modelAndView.setViewName("profile");
         return modelAndView;
     }
 

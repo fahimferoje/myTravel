@@ -120,6 +120,30 @@ public class UserService {
         
         return status;
     }
+
+    public void editStatus(StatusForm statusForm, List<Location> locations) {
+        
+        Optional<Location> locOp = locations.stream()
+                .filter(loc -> loc.getId() == statusForm.getLocationId())
+                .findFirst();
+        
+        if(!locOp.isPresent()){
+            return;
+        }
+        
+        Location location = locOp.get();
+        
+        System.out.println("Sta "+statusForm.getId());
+        
+        Status status = statusRepository.findStatusById(statusForm.getId());
+        
+        status.setStatusDescription(statusForm.getStatusDesc());
+        status.setLocation(location);
+        status.setStatusVisibility(statusForm.getStatusVisibility() == 0 ? Status.StatusVisibility.PRIVATE 
+                : Status.StatusVisibility.PUBLIC);
+        
+        statusRepository.save(status);
+    }
     
     
     
