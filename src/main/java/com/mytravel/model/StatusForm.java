@@ -22,6 +22,8 @@ public class StatusForm {
     private int locationId;
     
     private int id;
+    
+    private boolean pinnedStatus;
 
     public int getStatusVisibility() {
         return statusVisibility;
@@ -78,6 +80,16 @@ public class StatusForm {
     public void setId(int id) {
         this.id = id;
     }
+
+    public boolean isPinnedStatus() {
+        return pinnedStatus;
+    }
+
+    public void setPinnedStatus(boolean pinnedStatus) {
+        this.pinnedStatus = pinnedStatus;
+    }
+    
+    
     
     
     

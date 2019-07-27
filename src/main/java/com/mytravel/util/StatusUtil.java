@@ -10,6 +10,7 @@ import com.mytravel.model.StatusForm;
 import com.mytravel.model.User;
 import com.mytravel.service.UserService;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -64,6 +65,21 @@ public class StatusUtil {
         
         return statusForms;
         
+    }
+
+    public static StatusForm findPinnedStatus(List<StatusForm> statusForms) {
+        
+        for(StatusForm f : statusForms){
+            System.out.println("id :"+f.getId());
+            System.out.println("is pinned :"+f.isPinnedStatus());
+        }
+        Optional<StatusForm> pinnedStatusFormOp = statusForms
+                .stream()
+                .filter(st -> st.isPinnedStatus())
+                .findFirst();
+        
+        return pinnedStatusFormOp.isPresent() ? pinnedStatusFormOp.get() : null;
+                
     }
     
     

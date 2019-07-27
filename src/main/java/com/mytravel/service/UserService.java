@@ -144,6 +144,16 @@ public class UserService {
         
         statusRepository.save(status);
     }
+
+    public void makePinnedStatus(int statusId) {       
+        
+        Status status = statusRepository.findStatusById(statusId);
+        
+        status.setPinned(true);
+        
+        statusRepository.save(status);
+        
+    }
     
     
     

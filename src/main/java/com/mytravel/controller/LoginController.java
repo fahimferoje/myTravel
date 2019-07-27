@@ -57,10 +57,15 @@ public class LoginController {
         
         User user = StatusUtil.getLoggedInuser(userService);
         
+        List<StatusForm> statusForms = StatusUtil.getStatusesAsStatusFormList(userService, user.getId());
+        
+        StatusForm pinnedStatusForm = StatusUtil.findPinnedStatus(statusForms);
+        
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("locations", userService.findAllLocations());
-        modelAndView.addObject("allStatuses", StatusUtil.getStatusesAsStatusFormList(userService, user.getId()));
+        modelAndView.addObject("allStatuses", statusForms);
         modelAndView.addObject("statusForm",new StatusForm());
+        modelAndView.addObject("pinnedStatusForm", pinnedStatusForm);
         modelAndView.setViewName("profile");
         return modelAndView;
     }
@@ -72,12 +77,43 @@ public class LoginController {
         
         List<Location> locations = userService.findAllLocations();
                 
-        userService.saveStatus(statusForm, user, locations);       
+        userService.saveStatus(statusForm, user, locations);
+        
+        List<StatusForm> statusForms = StatusUtil.getStatusesAsStatusFormList(userService, user.getId());
+        
+        StatusForm pinnedStatusForm = StatusUtil.findPinnedStatus(statusForms);
+        
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("locations", locations);
+        modelAndView.addObject("allStatuses", statusForms);
+        modelAndView.addObject("statusForm",new StatusForm());
+        modelAndView.addObject("pinnedStatusForm", pinnedStatusForm);
+        modelAndView.setViewName("profile");
+        return modelAndView;
+    }
+    
+    @RequestMapping(value="/profile", params = "statusId", method = RequestMethod.POST)
+    public ModelAndView makePinnedStatus(@RequestParam int statusId) {
+
+        User user = StatusUtil.getLoggedInuser(userService);
+        
+        List<Location> locations = userService.findAllLocations();
+                
+        userService.makePinnedStatus(statusId);
+        
+        Status pinnedStatus = userService.getStatusById(statusId);
+        
+        List<StatusForm> statusForms = StatusUtil.getStatusesAsStatusFormList(userService, user.getId());
+        
+        //StatusForm pinnedStatusForm = StatusUtil.findPinnedStatus(statusForms);
+        
+        //System.out.println("piiiiii "+pinnedStatusForm.isPinnedStatus());
         
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("locations", locations);
         modelAndView.addObject("allStatuses", StatusUtil.getStatusesAsStatusFormList(userService, user.getId()));
         modelAndView.addObject("statusForm",new StatusForm());
+        modelAndView.addObject("pinnedStatusForm", StatusUtil.toStatusForm(pinnedStatus));
         modelAndView.setViewName("profile");
         return modelAndView;
     }   

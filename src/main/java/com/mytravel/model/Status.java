@@ -11,12 +11,8 @@ package com.mytravel.model;
  */
 
 import lombok.Data;
-import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
-import java.util.Set;
 
 @Data
 @Entity
@@ -48,5 +44,8 @@ public class Status {
     
     @ManyToOne
     private User user;
+    
+    @Column(columnDefinition = "boolean default false", nullable = false)
+    private Boolean pinned = false;
 
 }
