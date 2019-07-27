@@ -16,6 +16,8 @@ public class StatusForm {
     private String location;
     
     private String statusDesc;
+    
+    private String statusVisibilityString;
 
     public int getStatusVisibility() {
         return statusVisibility;
@@ -41,8 +43,11 @@ public class StatusForm {
         this.statusDesc = statusDesc;
     }
 
-    
-    
-    
-    
+    public String getStatusVisibilityString() {
+        return statusVisibilityString;
+    }
+
+    public void setStatusVisibilityString(String statusVisibilityString) {
+        this.statusVisibilityString = statusVisibilityString;
+    }  
 }

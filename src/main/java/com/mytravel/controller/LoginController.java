@@ -11,6 +11,7 @@ import com.mytravel.model.StatusForm;
 import com.mytravel.model.User;
 import com.mytravel.service.UserService;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,11 +64,33 @@ public class LoginController {
                 
         userService.saveStatus(statusForm, user, locations);
         
+        System.out.println("Fin "+userService.getAllStatusByUserId(user.getId()).size());
+        
+        List<Status> statuses = userService.getAllStatusByUserId(user.getId());
+        
+        List<StatusForm> statusForms = statuses.stream()
+                .map(st -> toStatusForm(st))
+                .collect(Collectors.toList());
+        
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("locations", locations);
+        modelAndView.addObject("allStatuses", statusForms);
+        modelAndView.addObject("statusForm",new StatusForm());
         modelAndView.setViewName("profile");
         return modelAndView;
     }
+    
+    private StatusForm toStatusForm(Status status) {
+        
+        StatusForm statusForm = new StatusForm();
+        statusForm.setLocation(status.getLocation().getName());
+        statusForm.setStatusVisibilityString(
+                status.getStatusVisibility().equals(Status.StatusVisibility.PRIVATE) ? "Private" : "Public");
+        statusForm.setStatusDesc(status.getStatusDescription());
+        
+        return statusForm;
+    }
+    
 
 
     @RequestMapping(value="/registration", method = RequestMethod.GET)

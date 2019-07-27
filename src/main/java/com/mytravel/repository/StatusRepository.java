@@ -6,12 +6,17 @@
 package com.mytravel.repository;
 
 import com.mytravel.model.Status;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 /**
  *
  * @author Fahim Feroje Al Jami
  */
 public interface StatusRepository extends JpaRepository<Status, Long>{
+    
+    @Query("SELECT st FROM Status st WHERE st.user.id = ?1")
+    List<Status> findStatusesByUserId(int userid);
     
 }

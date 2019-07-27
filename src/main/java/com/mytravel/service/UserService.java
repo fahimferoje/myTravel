@@ -106,6 +106,11 @@ public class UserService {
         
     }
     
+    public List<Status> getAllStatusByUserId(int userId) {
+        return statusRepository.findStatusesByUserId(userId);
+    }
+    
+    
     
 
 }
