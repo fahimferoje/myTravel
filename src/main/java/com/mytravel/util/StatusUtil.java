@@ -38,6 +38,7 @@ public class StatusUtil {
         statusForm.setStatusVisibilityString(
                 status.getStatusVisibility().equals(Status.StatusVisibility.PRIVATE) ? "Private" : "Public");
         statusForm.setStatusDesc(status.getStatusDescription());
+        statusForm.setUserName(status.getUser().getName() + " " + status.getUser().getLastName());
         
         return statusForm;
     }
@@ -48,6 +49,20 @@ public class StatusUtil {
         User user = userService.findUserByEmail(auth.getName());
         
         return user;
+    }
+
+    public static List<StatusForm> getPublicStatuses(UserService userService) {
+        
+        List<Status> publicStatuses = userService.getAllPublicStatuses();
+        
+        System.out.println("Pub "+publicStatuses.size());
+        
+        List<StatusForm> statusForms = publicStatuses.stream()
+                .map(st -> toStatusForm(st))
+                .collect(Collectors.toList());
+        
+        return statusForms;
+        
     }
     
     

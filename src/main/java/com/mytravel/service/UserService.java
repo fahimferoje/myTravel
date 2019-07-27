@@ -110,6 +110,10 @@ public class UserService {
         return statusRepository.findStatusesByUserId(userId);
     }
     
+    public List<Status> getAllPublicStatuses() {
+        return statusRepository.findAllPublicStatuses();
+    }
+    
     
     
 

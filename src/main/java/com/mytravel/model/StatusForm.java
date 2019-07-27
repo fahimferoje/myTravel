@@ -18,6 +18,8 @@ public class StatusForm {
     private String statusDesc;
     
     private String statusVisibilityString;
+    
+    private String userName;
 
     public int getStatusVisibility() {
         return statusVisibility;
@@ -49,5 +51,15 @@ public class StatusForm {
 
     public void setStatusVisibilityString(String statusVisibilityString) {
         this.statusVisibilityString = statusVisibilityString;
-    }  
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+    
+    
 }

@@ -34,7 +34,11 @@ public class LoginController {
 
     @RequestMapping(value="/", method = RequestMethod.GET)
     public ModelAndView showHome(){
-        ModelAndView modelAndView = new ModelAndView();
+        
+        ModelAndView modelAndView = new ModelAndView();         
+        
+        modelAndView.addObject("publicStatuses", StatusUtil.getPublicStatuses(userService));       
+        
         modelAndView.setViewName("home");
         return modelAndView;
     }
