@@ -48,8 +48,12 @@ public class LoginController {
     
     @RequestMapping(value="/profile", method = RequestMethod.GET)
     public ModelAndView showProfile(){
+        
+        User user = StatusUtil.getLoggedInuser(userService);
+        
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("locations", userService.findAllLocations());
+        modelAndView.addObject("allStatuses", StatusUtil.getStatusesAsStatusFormList(userService, user.getId()));
         modelAndView.addObject("statusForm",new StatusForm());
         modelAndView.setViewName("profile");
         return modelAndView;
@@ -58,8 +62,7 @@ public class LoginController {
     @RequestMapping(value="/profile", method = RequestMethod.POST)
     public ModelAndView createStatus(@ModelAttribute StatusForm statusForm) {
 
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userService.findUserByEmail(auth.getName());
+        User user = StatusUtil.getLoggedInuser(userService);
         
         List<Location> locations = userService.findAllLocations();
                 

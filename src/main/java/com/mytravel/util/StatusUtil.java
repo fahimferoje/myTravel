@@ -7,9 +7,12 @@ package com.mytravel.util;
 
 import com.mytravel.model.Status;
 import com.mytravel.model.StatusForm;
+import com.mytravel.model.User;
 import com.mytravel.service.UserService;
 import java.util.List;
 import java.util.stream.Collectors;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 /**
  *
@@ -38,6 +41,15 @@ public class StatusUtil {
         
         return statusForm;
     }
+    
+    public static User getLoggedInuser(UserService userService) {
+        
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByEmail(auth.getName());
+        
+        return user;
+    }
+    
     
     
 }
