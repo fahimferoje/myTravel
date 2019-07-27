@@ -18,10 +18,7 @@
                     </button>
                 </form>
                 
-                <br> <br>
-                        
-                        <input type="button" value="Post Status"/>
-                        
+                <br> <br>                        
                         <form action="#" th:action="@{/profile}" th:object="${statusForm}" method="post">
                             Status:
                             <input type="text" th:field="*{statusDesc}">
@@ -30,22 +27,25 @@
                                         Visibility:
                                         <br><br>
                                                 <input type="radio" th:field="*{statusVisibility}" value="0"> Private<br>
-                                                        <input type="radio" th:field="*{statusVisibility}" value="1" checked> Public<br>
-                                                                <br><br>
-                                                                        
-                                                                        <input list="locations" value ="${locations[0]}" name="locationsDataList" th:field="*{location}">
-                                                                            <datalist id="locationsDataList" th:field="*{location}">
-                                                                                <option th:each="location : ${locations}" th:value="${location.name}" 
-                                                                                        th:data-value="${location.name}">
-                                                                            </datalist>
+                                                <input type="radio" th:field="*{statusVisibility}" value="1" checked> Public<br>
+                                                <br><br>
+                                                 Location:
+                                                 <br> <br>
+                                                <select th:field="*{locationId}">
+                                                    <option th:each="location : ${locations}" th:value="${location.id}" th:text="${location.name}">Options</option>
+                                                </select>
                                                                             
                                                                             <br><br>
-                                                                                    <input type="submit" value="Submit">
+                                                                                    <input type="submit" value="Post Status">
                                                                                         </form> 
                                                                                         
                                                                                         </div>
                                                                                         
                                                                                         <div class="column">
+                                                                                            
+                                                                                            <h2>My Statuses</h2>
+                                                                                            <hr style="border-top: dotted 1px;" />
+                                                                                            <hr style="border-top: dotted 1px;" />
                                                                                             
                                                                                             <div>
                                                                                                 <div th:each="status : ${allStatuses}">
