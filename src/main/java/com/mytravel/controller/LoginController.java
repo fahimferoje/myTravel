@@ -156,16 +156,15 @@ public class LoginController {
         return modelAndView;
     }
     
-    @RequestMapping(value="/edited", method = RequestMethod.POST)
-    public ModelAndView editStatusToDb(@RequestParam (value="statusId") int statusId, @ModelAttribute StatusForm statusForm){
-        
+    @RequestMapping(value="/profile", params = "statusToEditId", method = RequestMethod.POST)
+    public ModelAndView editStatusToDb(@RequestParam int statusToEditId, @ModelAttribute StatusForm statusForm){
         List<Location> locations = userService.findAllLocations();
         
         int loggedInUserId = StatusUtil.getLoggedInuser(userService).getId();
         
         ModelAndView modelAndView = new ModelAndView();
         
-        statusForm.setId(statusId);
+        statusForm.setId(statusToEditId);
                 
         userService.editStatus(statusForm, locations);
         
