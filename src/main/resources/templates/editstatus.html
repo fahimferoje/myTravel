@@ -9,32 +9,54 @@ and open the template in the editor.
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     </head>
     <body>
-        <form action="#" th:action="@{/profile}" th:object="${statusForm}" method="post">
-            Status:
-            <input type="text" th:name="editedStatusDesc" th:value="${statusToEdit.statusDesc}">
-            <br><br>
+        <div class="col-md-6 col-md-offset-4">
+            <h3>Edit Status</h3>
+        </div>
+        
+        <div class="col-md-6 col-md-offset-4">
+            <form action="#" th:action="@{/profile}" th:object="${statusForm}" method="post">
+            <div class="col-sm-5">
+                Status:
+                <input type="text" th:name="editedStatusDesc" 
+                       th:value="${statusToEdit.statusDesc}" class="form-control">
+                <br><br>
+            </div>
             
-            Visibility:
-            <br><br>
-            <input type="radio" name="visibilitygrp" th:checked="${statusToEdit.statusVisibility} == 0" value="0"> Private<br>
-            <input type="radio" name="visibilitygrp" th:checked="${statusToEdit.statusVisibility} == 1" value="1"> Public<br>
-            <br><br>
-            Location:
-            <br> <br>
-            <select th:name="locationId">
-                <option th:each="location : ${locations}" 
+            <div class="col-sm-8">
+                Visibility:
+                <br><br>
+                <input type="radio" name="visibilitygrp" th:checked="${statusToEdit.statusVisibility} == 0" value="0"> Private<br>
+                <input type="radio" name="visibilitygrp" th:checked="${statusToEdit.statusVisibility} == 1" value="1"> Public<br>
+                <br><br>
+            </div>
+            
+            <div class="col-sm-8">
+                Location:
+                <br> <br>
+                <select th:name="locationId">
+                    <option th:each="location : ${locations}" 
                         th:value="${location.id}" 
                         th:text="${location.name}"
                         th:selected="${location.id} == ${statusToEdit.locationId}"
                         >Options</option>
-            </select>
+                </select>
+                        <br><br>
+            </div>    
+            
                     
             <input type="hidden" th:name="statusToEditId" th:value="${statusToEdit.id}" readonly style="border: none">
             
-            <br><br>
-            <input type="submit" value="Edit Status">
+            
+                    
+            <div class="col-sm-5">
+                <input type="submit" value="Edit Status" class="form-control">        
+            </div>
+            
         </form> 
+        </div>
+        
     </body>
 </html>
