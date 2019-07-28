@@ -32,9 +32,9 @@ import java.util.Optional;
 @Service("myTravelAppService")
 public class MyTravelAppService {
 
-    private UserRepository userRepository;
-    private RoleRepository roleRepository;
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
     
     private final LocationRepository locationRepository;
     
@@ -63,7 +63,7 @@ public class MyTravelAppService {
         user.setActive(1);
         
         Role userRole = roleRepository.findByRole("ADMIN");
-        user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
+        user.setRoles(new HashSet<>(Arrays.asList(userRole)));
         
         userRepository.save(user);
     }
