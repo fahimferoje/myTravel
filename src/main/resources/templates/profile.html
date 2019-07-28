@@ -73,7 +73,7 @@
                                                             <br>
                                                                             
                                                             <input type="hidden" th:name="statusId" th:value="${pinnedStatusForm.id}" readonly style="border: none">
-                                                            <i class="fa fa-map-marker"></i>&nbsp;<input type="text" th:value="${pinnedStatusForm.location}" readonly style="border: none">
+                                                            <i class="fas fa-map-marker-alt"></i>&nbsp;<input type="text" th:value="${pinnedStatusForm.location}" readonly style="border: none">
                                                                                 
                       
                                                             </form>
@@ -102,16 +102,17 @@
                                                                 <input type="hidden" th:name="statusId" th:value="${status.id}" readonly style="border: none">
                                                                                     
                                                                                     
-                                                                <i class="fa fa-map-marker"></i>&nbsp;<input type="text" th:value="${status.location}" readonly style="border: none">
+                                                                <i class="fas fa-map-marker-alt"></i>&nbsp;<input type="text" th:value="${status.location}" readonly style="border: none">
                                                                 <br>  
                                                                 <button type="submit" <i class="fa fa-edit"></i></button>
                                                                                                 
                                                             </form>
+                                                            <br>
                                                             <form th:action="@{/profile}" method="post">
                                                                 <input type="hidden" th:name="statusId" th:value="${status.id}" readonly style="border: none">
                                                                 <input type="hidden" th:name="oldPinnedStatusId" 
                                                                        th:value="${pinnedStatusForm} != null ? ${pinnedStatusForm.id} : 0 " readonly style="border: none">
-                                                                <button type="submit">Make it as pinned</button>
+                                                                <button class="btn btn-outline-secondary btn-sm"  type="submit">Make it as pinned</button>
                                                             </form>
                                                             <hr/>
                                                         </div>
