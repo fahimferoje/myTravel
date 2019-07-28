@@ -8,7 +8,7 @@ package com.mytravel.util;
 import com.mytravel.model.Status;
 import com.mytravel.model.StatusForm;
 import com.mytravel.model.User;
-import com.mytravel.service.UserService;
+import com.mytravel.service.MyTravelAppService;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -21,7 +21,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
  */
 public class StatusUtil {
     
-    public static List<StatusForm> getStatusesAsStatusFormList(UserService userService, int usrId) {
+    public static List<StatusForm> getStatusesAsStatusFormList(MyTravelAppService userService, int usrId) {
         
         List<Status> statuses = userService.getAllStatusByUserId(usrId);
         
@@ -49,7 +49,7 @@ public class StatusUtil {
         return statusForm;
     }
     
-    public static User getLoggedInuser(UserService userService) {
+    public static User getLoggedInuser(MyTravelAppService userService) {
         
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
@@ -57,7 +57,7 @@ public class StatusUtil {
         return user;
     }
 
-    public static List<StatusForm> getPublicStatuses(UserService userService) {
+    public static List<StatusForm> getPublicStatuses(MyTravelAppService userService) {
         
         List<Status> publicStatuses = userService.getAllPublicStatuses();
                 

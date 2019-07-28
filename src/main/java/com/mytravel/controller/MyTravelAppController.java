@@ -9,7 +9,7 @@ import com.mytravel.model.Location;
 import com.mytravel.model.Status;
 import com.mytravel.model.StatusForm;
 import com.mytravel.model.User;
-import com.mytravel.service.UserService;
+import com.mytravel.service.MyTravelAppService;
 import com.mytravel.util.StatusUtil;
 import java.util.List;
 import javax.validation.Valid;
@@ -26,17 +26,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-public class LoginController {
+public class MyTravelAppController {
 
     @Autowired
-    private UserService userService;
+    private MyTravelAppService myTravelAppService;
 
     @RequestMapping(value="/", method = RequestMethod.GET)
     public ModelAndView showHome(){
         
         ModelAndView modelAndView = new ModelAndView();         
         
-        modelAndView.addObject("publicStatuses", StatusUtil.getPublicStatuses(userService));       
+        modelAndView.addObject("publicStatuses", StatusUtil.getPublicStatuses(myTravelAppService));       
         
         modelAndView.setViewName("home");
         return modelAndView;
@@ -52,16 +52,16 @@ public class LoginController {
     @RequestMapping(value="/profile", method = RequestMethod.GET)
     public ModelAndView showProfile(){
         
-        User user = StatusUtil.getLoggedInuser(userService);
+        User user = StatusUtil.getLoggedInuser(myTravelAppService);
         
-        List<StatusForm> statusForms = StatusUtil.getStatusesAsStatusFormList(userService, user.getId());
+        List<StatusForm> statusForms = StatusUtil.getStatusesAsStatusFormList(myTravelAppService, user.getId());
         
-        StatusForm pinnedStatusForm = userService.findPinnedStatus(user.getId());
+        StatusForm pinnedStatusForm = myTravelAppService.findPinnedStatus(user.getId());
                 
         StatusUtil.removePinnedStatus(pinnedStatusForm, statusForms);
         
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("locations", userService.findAllLocations());
+        modelAndView.addObject("locations", myTravelAppService.findAllLocations());
         modelAndView.addObject("allStatuses", statusForms);
         modelAndView.addObject("statusForm",new StatusForm());
         modelAndView.addObject("pinnedStatusForm", pinnedStatusForm);
@@ -72,15 +72,15 @@ public class LoginController {
     @RequestMapping(value="/profile", method = RequestMethod.POST)
     public ModelAndView createStatus(@ModelAttribute StatusForm statusForm) {
 
-        User user = StatusUtil.getLoggedInuser(userService);
+        User user = StatusUtil.getLoggedInuser(myTravelAppService);
         
-        List<Location> locations = userService.findAllLocations();
+        List<Location> locations = myTravelAppService.findAllLocations();
                 
-        userService.saveStatus(statusForm, user, locations);
+        myTravelAppService.saveStatus(statusForm, user, locations);
         
-        List<StatusForm> statusForms = StatusUtil.getStatusesAsStatusFormList(userService, user.getId());
+        List<StatusForm> statusForms = StatusUtil.getStatusesAsStatusFormList(myTravelAppService, user.getId());
         
-        StatusForm pinnedStatusForm = userService.findPinnedStatus(user.getId());
+        StatusForm pinnedStatusForm = myTravelAppService.findPinnedStatus(user.getId());
         
         StatusUtil.removePinnedStatus(pinnedStatusForm, statusForms);
         
@@ -97,21 +97,21 @@ public class LoginController {
     public ModelAndView makePinnedStatus(@RequestParam int statusId
             , @RequestParam int oldPinnedStatusId) {
 
-        User user = StatusUtil.getLoggedInuser(userService);
+        User user = StatusUtil.getLoggedInuser(myTravelAppService);
         
         System.out.println("Old "+oldPinnedStatusId);
         
-        List<Location> locations = userService.findAllLocations();
+        List<Location> locations = myTravelAppService.findAllLocations();
                 
-        userService.makePinnedOrUnpinned(statusId, true);
+        myTravelAppService.makePinnedOrUnpinned(statusId, true);
         
         if(oldPinnedStatusId != 0){
-            userService.makePinnedOrUnpinned(oldPinnedStatusId, false);
+            myTravelAppService.makePinnedOrUnpinned(oldPinnedStatusId, false);
         }
         
-        Status pinnedStatus = userService.getStatusById(statusId);
+        Status pinnedStatus = myTravelAppService.getStatusById(statusId);
         
-        List<StatusForm> statusForms = StatusUtil.getStatusesAsStatusFormList(userService, user.getId());
+        List<StatusForm> statusForms = StatusUtil.getStatusesAsStatusFormList(myTravelAppService, user.getId());
         
         StatusForm pinnedStForm = StatusUtil.toStatusForm(pinnedStatus);
         
@@ -142,7 +142,7 @@ public class LoginController {
         
         ModelAndView modelAndView = new ModelAndView();
                 
-        Status status = userService.getStatusById(statusId);
+        Status status = myTravelAppService.getStatusById(statusId);
                 
         if(status == null){
             modelAndView.setViewName("editerror");
@@ -154,7 +154,7 @@ public class LoginController {
                 
                 
         modelAndView.addObject("statusToEdit", StatusUtil.toStatusForm(status));
-        modelAndView.addObject("locations", userService.findAllLocations());
+        modelAndView.addObject("locations", myTravelAppService.findAllLocations());
 
         modelAndView.setViewName("editstatus");
         return modelAndView;
@@ -169,9 +169,9 @@ public class LoginController {
             @RequestParam int visibilitygrp,
             @RequestParam int locationId) {
         
-        List<Location> locations = userService.findAllLocations();
+        List<Location> locations = myTravelAppService.findAllLocations();
         
-        int loggedInUserId = StatusUtil.getLoggedInuser(userService).getId();
+        int loggedInUserId = StatusUtil.getLoggedInuser(myTravelAppService).getId();
         
         ModelAndView modelAndView = new ModelAndView();
         
@@ -181,18 +181,18 @@ public class LoginController {
         statusForm.setLocationId(locationId);
         statusForm.setStatusDesc(editedStatusDesc);
                 
-        userService.editStatus(statusForm, locations);
+        myTravelAppService.editStatus(statusForm, locations);
         
-        List<StatusForm> statusForms = StatusUtil.getStatusesAsStatusFormList(userService
+        List<StatusForm> statusForms = StatusUtil.getStatusesAsStatusFormList(myTravelAppService
                 , loggedInUserId);
         
-        StatusForm pinnedStatusForm = userService.findPinnedStatus(loggedInUserId);
+        StatusForm pinnedStatusForm = myTravelAppService.findPinnedStatus(loggedInUserId);
                 
         StatusUtil.removePinnedStatus(pinnedStatusForm, statusForms);
         
         modelAndView.addObject("locations", locations);
-        modelAndView.addObject("allStatuses", StatusUtil.getStatusesAsStatusFormList(userService
-                , StatusUtil.getLoggedInuser(userService).getId()));
+        modelAndView.addObject("allStatuses", StatusUtil.getStatusesAsStatusFormList(myTravelAppService
+                , StatusUtil.getLoggedInuser(myTravelAppService).getId()));
         modelAndView.addObject("statusForm",new StatusForm());
         modelAndView.addObject("pinnedStatusForm", pinnedStatusForm);
 
@@ -204,7 +204,7 @@ public class LoginController {
     public ModelAndView createNewUser(@Valid User user, BindingResult bindingResult) {
         System.out.println("Registration");
         ModelAndView modelAndView = new ModelAndView();
-        User userExists = userService.findUserByEmail(user.getEmail());
+        User userExists = myTravelAppService.findUserByEmail(user.getEmail());
         if (userExists != null) {
             bindingResult
                     .rejectValue("email", "error.user",
@@ -213,7 +213,7 @@ public class LoginController {
         if (bindingResult.hasErrors()) {
             modelAndView.setViewName("registration");
         } else {
-            userService.saveUser(user);
+            myTravelAppService.saveUser(user);
             modelAndView.addObject("successMessage", "User has been registered successfully");
             modelAndView.addObject("user", new User());
             modelAndView.setViewName("registration");
@@ -226,7 +226,7 @@ public class LoginController {
     public ModelAndView home(){
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userService.findUserByEmail(auth.getName());
+        User user = myTravelAppService.findUserByEmail(auth.getName());
         modelAndView.addObject("userName", "Welcome " + user.getName() + " " + user.getLastName() + " (" + user.getEmail() + ")");
         modelAndView.addObject("adminMessage","Content Available Only for Users with Admin Role");
         modelAndView.setViewName("admin/home");

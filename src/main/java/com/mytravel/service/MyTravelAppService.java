@@ -29,8 +29,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
-@Service("userService")
-public class UserService {
+@Service("myTravelAppService")
+public class MyTravelAppService {
 
     private UserRepository userRepository;
     private RoleRepository roleRepository;
@@ -41,7 +41,7 @@ public class UserService {
     private final StatusRepository statusRepository;
     
     @Autowired
-    public UserService(UserRepository userRepository,
+    public MyTravelAppService(UserRepository userRepository,
             RoleRepository roleRepository,
             LocationRepository locationRepository1,
             StatusRepository statusRepository1,
