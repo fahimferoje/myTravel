@@ -5,10 +5,6 @@
  */
 package com.mytravel.config;
 
-/**
- *
- * @author Fahim Feroje Al Jami
- */
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;

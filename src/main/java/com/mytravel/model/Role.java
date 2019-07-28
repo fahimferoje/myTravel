@@ -5,10 +5,6 @@
  */
 package com.mytravel.model;
 
-/**
- *
- * @author Fahim Feroje Al Jami
- */
 import lombok.Data;
 
 import javax.persistence.*;

@@ -5,11 +5,6 @@
  */
 package com.mytravel.model;
 
-/**
- *
- * @author Fahim Feroje Al Jami
- */
-
 import java.util.List;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;

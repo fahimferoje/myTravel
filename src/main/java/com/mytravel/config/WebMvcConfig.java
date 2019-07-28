@@ -5,10 +5,7 @@
  */
 package com.mytravel.config;
 
-/**
- *
- * @author Fahim Feroje Al Jami
- */
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
