@@ -9,31 +9,29 @@ and open the template in the editor.
     
     <head>
         <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.0/css/all.css' integrity='sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ' crossorigin='anonymous'>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     </head>
     
     <th:block th:include="/breadCrumb"></th:block> 
     
-    <div>
+    <div class="col-md-6 col-md-offset-1">
         <h1>My Travel</h1>
         <hr/> <hr/>
     </div>
     
-    <div>
+    <div class="col-md-6 col-md-offset-1">
         <h2>Public thoughts</h2>
         <hr/>
     </div>
     
-    <div th:each="status : ${publicStatuses}">
-        <table>
+    <div class="col-md-6 col-md-offset-1" th:each="status : ${publicStatuses}">
+        <table table-borderless>
             <tr>
                 <td<i class='fas fa-user-tie'></i>&nbsp;<span th:text="${status.userName}"> Status </span></td>
             </tr>
             <tr>
-                <td><span th:text="${status.statusDesc}"> Status </span></td>
+                <td><i class="far fa-comment"></i>&nbsp;<span th:text="${status.statusDesc}"> Status </span></td>
             </tr>
-<!--            <tr>
-                <td><span th:text="${status.statusVisibilityString}"> Visibility </span></td>
-            </tr>-->
             <tr>
                 <td><i class="fa fa-map-marker"></i>&nbsp;<span th:text="${status.location}"> Location </span></td>
             </tr>
