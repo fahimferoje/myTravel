@@ -6,10 +6,10 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 @SpringBootApplication(scanBasePackages = {"com.mytravel"})
 @EntityScan("com.mytravel.model")
-public class RegApplication {
+public class MyTravelApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(RegApplication.class, args);
+		SpringApplication.run(MyTravelApplication.class, args);
 	}
 
 }
