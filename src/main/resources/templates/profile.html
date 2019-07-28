@@ -12,38 +12,30 @@
         
         <div style="border: 1px solid #ccc;padding:5px;margin-bottom:20px;">
             <a th:href="@{/}">Home</a>
+            | &nbsp;
+            <a th:href="@{/logout}">Log out</a>
         </div>
         
         <div class="row">
             
             <div class="column">
-                <form th:action="@{/logout}" method="get">
-                    <div class="col-sm-3">
-                    <button class="btn btn-md btn-danger btn-block" name="registration"
-                            type="Submit">Logout
-                    </button>
-                    </div>
-                </form>
-                
-                <br><br><br><br>                        
                         <form action="#" th:action="@{/profile}" th:object="${statusForm}" method="post">
                             <div class="col-sm-8">
                             Status:
                             <input type="text" th:field="*{statusDesc}" class="form-control">
-                            </div>
-                            <br><br><br>
+                                <br>
+                            </div>      
                             
                             <div class="col-sm-8">
                                 Visibility:
-                                <br><br>
+                                <br>
                                 <input type="radio" th:field="*{statusVisibility}" value="0"> Private<br>
                                 <input type="radio" th:field="*{statusVisibility}" value="1" checked> Public<br>
                                 <br><br>
                             </div>
                             
                             <div class="col-sm-8">
-                                Location:
-                                <br> <br>
+                                Location: &nbsp;
                                 <select th:field="*{locationId}" class="browser-default custom-select custom-select-lg mb-3">
                                     <option th:each="location : ${locations}" th:value="${location.id}" th:text="${location.name}">Options</option>
                                 </select>

@@ -39,8 +39,7 @@ and open the template in the editor.
             </div>
             
             <div class="col-sm-8">
-                Location:
-                <br> <br>
+                Location: &nbsp;
                 <select th:name="locationId">
                     <option th:each="location : ${locations}" 
                         th:value="${location.id}" 
