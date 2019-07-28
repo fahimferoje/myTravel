@@ -35,10 +35,6 @@ public class Status {
     @Enumerated(EnumType.ORDINAL)
     private StatusVisibility statusVisibility;
     
-    //@ManyToMany(cascade = CascadeType.ALL)
-    //@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-    //private Set<Role> roles;
-    
     @ManyToOne
     private Location location;
     

@@ -98,9 +98,7 @@ public class MyTravelAppController {
             , @RequestParam int oldPinnedStatusId) {
 
         User user = StatusUtil.getLoggedInuser(myTravelAppService);
-        
-        System.out.println("Old "+oldPinnedStatusId);
-        
+                
         List<Location> locations = myTravelAppService.findAllLocations();
                 
         myTravelAppService.makePinnedOrUnpinned(statusId, true);
@@ -129,7 +127,7 @@ public class MyTravelAppController {
 
     @RequestMapping(value="/registration", method = RequestMethod.GET)
     public ModelAndView registration(){
-        System.out.println("Registration get method");
+        
         ModelAndView modelAndView = new ModelAndView();
         User user = new User();
         modelAndView.addObject("user", user);
@@ -148,10 +146,7 @@ public class MyTravelAppController {
             modelAndView.setViewName("editerror");
             return modelAndView;
         }
-        
-        System.out.println("S "+status.getId());
-        System.out.println("Ssd "+StatusUtil.toStatusForm(status).getId());
-                
+                        
                 
         modelAndView.addObject("statusToEdit", StatusUtil.toStatusForm(status));
         modelAndView.addObject("locations", myTravelAppService.findAllLocations());
@@ -202,7 +197,6 @@ public class MyTravelAppController {
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
     public ModelAndView createNewUser(@Valid User user, BindingResult bindingResult) {
-        System.out.println("Registration");
         ModelAndView modelAndView = new ModelAndView();
         User userExists = myTravelAppService.findUserByEmail(user.getEmail());
         if (userExists != null) {

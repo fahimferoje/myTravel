@@ -68,11 +68,6 @@ public class MyTravelAppService {
         userRepository.save(user);
     }
     
-    public List<User> findDummyUsers(){
-        System.out.println("Lookinng for dummy ysers");
-        return userRepository.findDummyUsers();
-    }
-    
     public List<Location> findAllLocations() {
         return locationRepository.findAll();
     }
@@ -92,10 +87,7 @@ public class MyTravelAppService {
         }
         
         Location location = locOp.get();
-        
-        System.out.println("Found location "+location.getName());
-        System.out.println("Found location id "+location.getId());
-        
+                
         Status status = new Status();
         status.setStatusDescription(statusForm.getStatusDesc());
         status.setUser(user);
@@ -133,9 +125,7 @@ public class MyTravelAppService {
         }
         
         Location location = locOp.get();
-        
-        System.out.println("Sta "+statusForm.getId());
-        
+                
         Status status = statusRepository.findStatusById(statusForm.getId());
         
         status.setStatusDescription(statusForm.getStatusDesc());
