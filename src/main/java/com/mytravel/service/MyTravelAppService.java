@@ -5,11 +5,6 @@
  */
 package com.mytravel.service;
 
-/**
- *
- * @author Fahim Feroje Al Jami
- */
-//import com.user.login.model.Role;
 import com.mytravel.model.Location;
 import com.mytravel.model.Role;
 import com.mytravel.model.Status;
